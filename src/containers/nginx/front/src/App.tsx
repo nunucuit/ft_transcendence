@@ -4,7 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { SocketProvider } from "./context/SocketContext";
 import { NotificationProvider } from "./context/NotificationContext";
 
-import './i18n';
+import i18n from "./i18n";
+import LanguageSelector from "@/components/LanguageSelector";
 import { useTranslation } from 'react-i18next';
 
 import Home from "@/pages/Home"
@@ -20,7 +21,6 @@ import LiveChat from "@/pages/liveChat"
 // import Testlog from "@/pages/testlog"
 
 function App() {
-  const { t, i18n } = useTranslation();
 
   const changeLang = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -29,18 +29,7 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {/* Sélecteur de langue  */}
-      <div className="absolute top-4 right-4 text-sm text-gray-300 z-50">
-        <select
-          onChange={(e) => changeLang(e.target.value)}
-          defaultValue={localStorage.getItem('lang') || 'en'}
-          className="bg-gray-800 border border-gray-600 rounded p-1"
-        >
-          <option value="en">🇬🇧 EN</option>
-          <option value="fr">🇫🇷 FR</option>
-          <option value="es">🇪🇸 ES</option>
-        </select>
-      </div>
+      <LanguageSelector />
 
       <BrowserRouter>
         <NotificationProvider>

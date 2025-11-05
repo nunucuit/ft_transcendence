@@ -1,8 +1,10 @@
-import { Link, useLocation } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 function Profile() {
 
+	const { t } = useTranslation();
 	const [stats] = useState({ // stats de l user a recup
 		login: "TheWizzler",
 		victoires: 25,
@@ -127,12 +129,12 @@ function Profile() {
 			<div className="flex items-center justify-between mb-4">
 			<div className="flex items-center gap-3">
 				<div className="bg-gradient-to-br from-gray-400/80 to-slate-500/80 rounded-lg p-3 shadow-lg">
-				<span className="text-2xl font-bold text-slate-900">LVL</span>
+				<span className="text-2xl font-bold text-slate-900">{t("profile.level")}</span>
 				</div>
 				<span className="text-5xl font-arcade text-gray-300">{level}</span>
 			</div>
 			<div className="text-right">
-				<div className="text-sm text-slate-400">Prochain niveau</div>
+				<div className="text-sm text-slate-400">{t("profile.nextLevel")}</div>
 				<div className="text-2xl font-bold text-purple-400">{level + 1}</div>
 			</div>
 			</div>
@@ -141,9 +143,9 @@ function Profile() {
 
 			<div className="mt-4 text-center text-slate-300 text-sm">
 			{xpProgress < 100 ? (
-				<span>Il vous reste <span className="font-bold text-purple-400">{(100 - xpProgress).toFixed(0)}%</span> pour atteindre le niveau {level + 1}</span>
+				<span>{t("profile.youNeed")}<span className="font-bold text-purple-400">{(100 - xpProgress).toFixed(0)}%</span>{t("profile.remainingXP")}{level + 1}</span>
 			) : (
-				<span className="text-green-400 font-bold">Niveau max atteint !</span>
+				<span className="text-green-400 font-bold">{t("profile.maxLevel")}</span>
 			)}
 			</div>
 
@@ -173,7 +175,7 @@ function Profile() {
 	  <div className="max-w-4xl w-full">
         <div className="text-center mb-12">
           {/* <h1 className="text-5xl font-bold text-white mb-2">{stats.login}</h1> */}
-          <p className="text-purple-300">Analyse des performances</p>
+          <p className="text-purple-300">{t("profile.perfomanceAnalysis")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -227,7 +229,7 @@ function Profile() {
               {/* Contenu central */}
               <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <div className="text-5xl font-bold text-white">{victoiresPct.toFixed(0)}%</div>
-                <div className="text-sm text-purple-300 mt-1">Taux de victoire</div>
+                <div className="text-sm text-purple-300 mt-1">{t("profile.winRate")}</div>
               </div>
             </div>
           </div>
@@ -240,7 +242,7 @@ function Profile() {
                   <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
                   </div>
                   <div>
-                    <div className="text-gray-400 text-sm">Victoires</div>
+                    <div className="text-gray-400 text-sm">{t("profile.wins")}</div>
                     <div className="text-3xl font-arcade text-white">{stats.victoires}</div>
                   </div>
                 </div>
@@ -257,7 +259,7 @@ function Profile() {
                     {/* <Target className="w-6 h-6 text-red-400" /> */}
                   </div>
                   <div>
-                    <div className="text-gray-400 text-sm">Défaites</div>
+                    <div className="text-gray-400 text-sm">{t("profile.losses")}</div>
                     <div className="text-3xl font-arcade text-white">{stats.defaites}</div>
                   </div>
                 </div>
@@ -274,7 +276,7 @@ function Profile() {
                     {/* <TrendingUp className="w-6 h-6 text-purple-300" /> */}
                   </div>
                   <div>
-                    <div className="text-purple-200 text-sm">Total des parties jouées</div>
+                    <div className="text-purple-200 text-sm">{t("profile.totalGamesPlayed")}</div>
                     <div className="text-3xl font-arcade text-white">{total}</div>
                   </div>
                 </div>
@@ -284,11 +286,11 @@ function Profile() {
         </div>
 				{/* TOTAL SCORED */}
 		<div className="mt-12 text-center bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10">
-			<div className="text-gray-400 mb-2">Total but marque</div>
+			<div className="text-gray-400 mb-2">{t("profile.totalGoalsScored")}</div>
 			<div className="text-4xl font-arcade text-white">{stats.goalScored}</div>
 		</div>
 		<div className="mt-6 text-center bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10">
-			<div className="text-gray-400 mb-2">Total but encaisse</div>
+			<div className="text-gray-400 mb-2">{t("profile.totalGoalsTaken")}</div>
 			<div className="text-4xl font-arcade text-white">{stats.goalTaken}</div>
 		</div>
       </div>
@@ -304,13 +306,13 @@ function Profile() {
 		{/* {games.map(game => ( */}
 		<div className="bg-slate-800/50  backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-2xl m-2">
 			{/* <div>{game.result === 'win' ? '🏆' : ''} vs {opponent_name}</div> */}
-			<div>win 🏆 vs Jeremy
-			Score: 5 - 2</div>
+			<div>{t("profile.matchResult", { result: game_result, opponent: opponentName })}</div>
+			<div>{t("profile.score", { left: 5, right: 2 })}</div>
 			{/* <div>{new Date(game.played_at).toLocaleDateString()}</div> */}
 		</div>
 		<div className="bg-slate-800/50  backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 shadow-2xl m-2">
-			<div>Lost ❌ vs Timothe
-			Score: 4 - 5</div>
+			<div>{t("profile.lostAgainst", { opponent: "Timothe" })}</div>
+			<div>{t("profile.score", { left: 4, right: 5 })}</div>
 		</div>
 	</div>
 
@@ -321,14 +323,14 @@ function Profile() {
 			disabled={page === 1}
 			onClick={() => setPage(p => p - 1)}
 		>
-			Précédent
+			{t("profile.previous")}
 		</button>
 		<span>Page {page} / {totalPages}</span>
 		<button
 			disabled={page === totalPages}
 			onClick={() => setPage(p => p + 1)}
 		>
-			Suivant
+			{t("profile.next")}
 		</button>
 	</div>
 	</div>
